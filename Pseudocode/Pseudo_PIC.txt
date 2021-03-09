@@ -1,0 +1,26 @@
+PIC16F887
+
+start setup:
+    config analog
+    config io
+    clear ports
+    config UART
+    config I2C
+end setup
+
+start isr:
+    if RCIF:
+        save RCREG
+        set RCIF
+    end
+end isr
+
+start main:
+    call setup
+    loop forever:
+        read I2C
+	write TXREG
+        read RCREG
+	  if RCREG
+          write PORTE.bits
+    end loop

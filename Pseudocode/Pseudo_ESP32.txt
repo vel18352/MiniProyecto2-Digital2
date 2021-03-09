@@ -1,0 +1,20 @@
+ESP32
+
+set variables
+set feeds
+read AdafruitIO_Data function
+
+start setup:
+    config io
+    config serial
+    call read AdafruitIO_Data function
+    connect to cloud
+end setup
+
+start main:
+    cloud run
+    if read Serial
+	write AdafruitIO_cloud
+    if AdafruitIO_Data_in
+	write Serial Data
+    end loop
